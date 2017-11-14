@@ -13,3 +13,36 @@ We also try to experiment with undersampling to further see how changes in frequ
         source activate venv/bin/activate
         pip install click
         python run.py
+
+# Commands
+```bash
+Usage: run.py [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  generate-mentions
+  generate-reverse-index
+  oversample
+
+Usage: run.py generate-mentions [OPTIONS]
+
+Options:
+  --input_file PATH
+  --help             Show this message and exit.
+
+Usage: run.py generate-reverse-index [OPTIONS]
+
+Options:
+  --input_file PATH
+  --help             Show this message and exit.
+
+Usage: run.py oversample [OPTIONS]
+
+Options:
+  --threshhold INTEGER  Oversample entities with below `threshhold` number of
+                        mentions
+  --n INTEGER           Number of lines to oversample
+  --help                Show this message and exit.
+```
