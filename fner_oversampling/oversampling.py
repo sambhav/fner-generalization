@@ -86,7 +86,7 @@ def over_sample(entity_name, n, rindex):
         label_fname = label[1:].replace("/", ".") + ".dat"
         escaped_entity_name = re.sub(r'[^A-Za-z0-9]+', '', entity_name)
         file_name = os.path.join(MENTION_DIR, label_fname)
-        output_fname = os.path.join(OVERSAMPLE_DIR, "{}.".format(escaped_entity_name), label_fname)
+        output_fname = os.path.join(OVERSAMPLE_DIR, "{}.{}".format(escaped_entity_name, label_fname))
         with open(file_name) as f:
             mention_data = get_mention_data(f, n)
             over_sampled_data = []
@@ -126,6 +126,6 @@ def over_sample_entities(entities, n):
 @click.option('--n', default=500, help="Number of lines to oversample")
 def over_sample_below_thresh(threshhold, n):
     _create_dirs()
-    data = json.load(open('res_count.json'))
+    data = json.load(open(REVERSE_COUNT_INDEX))
     for i in range(1, threshhold):
         over_sample_entities(data.get(str(i), []), n)
