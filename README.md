@@ -7,3 +7,8 @@ undermentioned entities in the training database lead to lower accuracy when tes
 To overcome this problem we try to oversample the data by contextually replacing the entities in sentences with entities from the same class.
 
 We also try to experiment with undersampling to further see how changes in frequency of entities in training data affect results.
+
+# Installation
+        virtualenv -p python3 venv
+        source activate venv/bin/activate
+        python setup.py install
