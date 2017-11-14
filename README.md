@@ -11,4 +11,5 @@ We also try to experiment with undersampling to further see how changes in frequ
 # Installation
         virtualenv -p python3 venv
         source activate venv/bin/activate
-        python setup.py install
+        pip install click
+        python run.py
