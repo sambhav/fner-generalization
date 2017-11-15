@@ -16,6 +16,8 @@ MENTION_DIR = os.path.join(DATA_DIR, 'mentions')
 OVERSAMPLE_DIR = os.path.join(DATA_DIR, 'oversample')
 REVERSE_INDEX = os.path.join(DATA_DIR, 'rindex.json')
 REVERSE_COUNT_INDEX = os.path.join(DATA_DIR, 'rcount.json')
+REVERSE_RESULT = os.path.join(DATA_DIR, 'rev_result.json')
+UNDERSAMPLE_DATA = os.path.join(DATA_DIR, 'undersample.json')
 
 
 @click.group()
@@ -120,6 +122,29 @@ def over_sample_entities(entities, n):
     pool = Pool()
     pool.map(over_sample_n, entities)
 
+def under_sample_entities(entities, n, data_file = DATA_FILE):
+    en = set(entities)
+    count = defaultdict(int)
+    result = []
+    with open(data_file) as f:
+        for line in f:
+            line = json.loads(line)
+            mentions = line["mentions"]
+            names = set([mention["name"] for mention in mentions])
+            valid = names & en
+            under_sample = True
+            for name in valid:
+                if count[name] >= n:
+                    under_sample = False
+            if under_sample:
+                for name in valid:
+                    if count[name] < n:
+                        count[name] += 1
+                result.append(json.dumps(line) + '\n')        
+
+    with open(UNDERSAMPLE_DATA, 'w') as f:
+        f.writelines(result)
+
 
 @cli.command('oversample')
 @click.option('--threshhold', default=10, help="Oversample entities with below `threshhold` number of mentions")
@@ -129,3 +154,16 @@ def over_sample_below_thresh(threshhold, n):
     data = json.load(open(REVERSE_COUNT_INDEX))
     for i in range(1, threshhold):
         over_sample_entities(data.get(str(i), []), n)
+
+
+@cli.command('undersample')
+@click.option('--threshhold', default=1000, help="Oversample entities with above `threshhold` number of mentions")
+@click.option('--n', default=500, help="Number of lines to undersample")
+@click.option('--data_file', type=click.Path(exists=True), default=SAMPLE_DATA_FILE)
+def under_sample_above_thresh(c, n, data_file):
+    data = json.load(open(REVERSE_RESULT))
+    entities = []
+    for i in data:
+        if int(i) >= c:
+            entities += data[i]
+    under_sample_entities(entities, n)
