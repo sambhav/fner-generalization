@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='fners',
+    name='fnerg',
     version='0.1',
     include_package_data=True,
     packages=find_packages(),
@@ -10,6 +10,6 @@ setup(
     ],
     entry_points='''
         [console_scripts]
-        fners=fner_oversampling.oversampling:cli
+        fnerg=fner_generalization.cli:fnerg
     ''',
 )

@@ -1,4 +1,4 @@
-from fner_oversampling.oversampling import cli
+from fner_generalization.cli import fnerg
 
 if __name__ == "__main__":
-    cli()
+    fnerg()
