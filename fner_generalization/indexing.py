@@ -7,7 +7,7 @@ import click
 from fner_generalization.constants import (DATA_DIR, MENTION_DIR,
                                            OVERSAMPLE_DIR, SAMPLE_DATA_FILE,
                                            REVERSE_INDEX, REVERSE_COUNT_INDEX,
-                                           LABEL_COUNT_INDEX)
+                                           LABEL_COUNT_INDEX, REVERSE_LABEL_COUNT_INDEX)
 
 
 def _create_dirs():
@@ -50,12 +50,18 @@ def generate_reverse_index(input_file):
                     label_count[mention_name][label] += 1
                 data_count[mention_name] += 1
     output_data = dict(output_data)
+    reverse_label_count = defaultdict(lambda: defaultdict(list))
     with open(REVERSE_INDEX, 'w') as f:
         json.dump(output_data, f, indent=2)
     reverse_count_index = defaultdict(list)
     for key, value in data_count.items():
         reverse_count_index[value].append(key)
+    for key, labels in label_count.items():
+        for label, count in labels.items():
+            reverse_label_count[count][key].append(label)
     with open(REVERSE_COUNT_INDEX, 'w') as f:
         json.dump(reverse_count_index, f, indent=2)
     with open(LABEL_COUNT_INDEX, 'w') as f:
         json.dump(label_count, f, indent=2)
+    with open(REVERSE_LABEL_COUNT_INDEX, 'w') as f:
+        json.dump(reverse_label_count, f, indent=2)
