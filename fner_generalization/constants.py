@@ -8,6 +8,7 @@ OVERSAMPLE_DIR = os.path.join(DATA_DIR, 'oversample')
 
 REVERSE_INDEX = os.path.join(DATA_DIR, 'rindex.json')
 REVERSE_COUNT_INDEX = os.path.join(DATA_DIR, 'rcount.json')
+LABEL_COUNT_INDEX = os.path.join(DATA_DIR, 'lcount.json')
 
 SAMPLE_DATA_FILE = os.path.join(PROJECT_DIR, 'sample_data', 'data.json')
 
