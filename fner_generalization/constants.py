@@ -15,3 +15,5 @@ SAMPLE_DATA_FILE = os.path.join(PROJECT_DIR, 'sample_data', 'data.json')
 
 OVERSAMPLE_DATA = os.path.join(DATA_DIR, 'oversample.json')
 UNDERSAMPLE_DATA = os.path.join(DATA_DIR, 'undersample.json')
+UNDERSAMPLE_NAME_DATA = os.path.join(DATA_DIR, 'undersample-name.json')
+UNDERSAMPLE_ENTITY_DATA = os.path.join(DATA_DIR, 'undersample-entity.json')

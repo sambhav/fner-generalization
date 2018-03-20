@@ -7,7 +7,7 @@ import click
 from fner_generalization.constants import (SAMPLE_DATA_FILE,
                                          REVERSE_COUNT_INDEX,
                                          UNDERSAMPLE_DATA,
-                                         REVERSE_LABEL_COUNT_INDEX)
+                                         REVERSE_LABEL_COUNT_INDEX, UNDERSAMPLE_NAME_DATA, UNDERSAMPLE_ENTITY_DATA)
 
 
 def under_sample_label_entities(entities, data_file):
@@ -36,7 +36,7 @@ def under_sample_label_entities(entities, data_file):
             if new_mentions:
                 obj['mentions'] = new_mentions
                 result.append(json.dumps(obj) + '\n')
-    with open(UNDERSAMPLE_DATA, 'w') as f:
+    with open(UNDERSAMPLE_ENTITY_DATA, 'w') as f:
         f.writelines(result)
 
 
@@ -87,7 +87,7 @@ def under_sample_names(entities, data_file, flag=False):
                         count[name] -= 1
             else:
                 result.append(json.dumps(line) + '\n')
-    with open(UNDERSAMPLE_DATA, 'w') as f:
+    with open(UNDERSAMPLE_NAME_DATA, 'w') as f:
         f.writelines(result)
 
 
