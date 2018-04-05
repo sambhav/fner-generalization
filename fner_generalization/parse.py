@@ -91,3 +91,20 @@ def generate_missing(test_count, train_count, train_data_file):
         f.writelines(label_data)
     with open(TEMP_FILE+'.spec', 'w') as f:
         json.dump(special_data, f, indent=2, sort_keys=True)
+
+@click.command('remove-missing')
+@click.option('--train_data_file', type=click.Path(exists=True), default=TRAIN_DATA_FILE, help="Path to the test file")
+@click.option('--test_data_file', type=click.Path(exists=True), default=TEST_DATA_FILE, help="Path to the test file")
+def remove_missing(train_data_file, test_data_file):
+    in_test = set()
+    with open(test_data_file) as f:
+        for line in f:
+            data = json.loads(line)
+            in_test.add((data['fileid'], data['pid'], data['senid']))
+    with open(train_data_file) as f, open(TEMP_FILE, 'w') as output:
+        for line in f:
+            data = json.loads(line)
+            key = (data['fileid'], data['pid'], data['senid'])
+            if key not in in_test:
+                output.write(line)
+
