@@ -1,3 +1,7 @@
+sample_data/train*.json
+sample_data/output*
+sample_data/*count*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
