@@ -6,6 +6,8 @@ import click
 
 from fner_generalization.constants import (DATA_DIR, MENTION_DIR,
                                            OVERSAMPLE_DIR, SAMPLE_DATA_FILE,
+                                           TRAIN_DATA_FILE, TEST_DATA_FILE,
+                                           TRAIN_DATA_COUNT_FILE, TEST_DATA_COUNT_FILE,
                                            REVERSE_INDEX, REVERSE_COUNT_INDEX,
                                            LABEL_COUNT_INDEX, REVERSE_LABEL_COUNT_INDEX)
 
@@ -65,3 +67,26 @@ def generate_reverse_index(input_file):
         json.dump(label_count, f, indent=2)
     with open(REVERSE_LABEL_COUNT_INDEX, 'w') as f:
         json.dump(reverse_label_count, f, indent=2)
+
+@click.command('generate-count')
+@click.option('--input_file', type=click.Path(exists=True), default=TRAIN_DATA_FILE)
+@click.option('--output_file', type=click.Path(), default=TRAIN_DATA_COUNT_FILE)
+@click.option('--test', default=False)
+def generate_count(input_file, output_file, test):
+    if test:
+        input_file = TEST_DATA_FILE
+        output_file = TEST_DATA_COUNT_FILE
+    count = defaultdict(int)
+    i = 0
+    with open(input_file) as f:
+        for line in f:
+            i += 1
+            try:
+                data = json.loads(line)
+                for mention in data['mentions']:
+                    for label in mention['labels']:
+                        count[label] += 1
+            except:
+                print(i)
+    with open(output_file, 'w') as f:
+        json.dump(dict(count), f, indent=2, sort_keys=True)
