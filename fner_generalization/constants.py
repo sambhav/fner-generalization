@@ -17,7 +17,7 @@ TRAIN_DATA_FILE = os.path.join(PROJECT_DIR, 'sample_data', 'train_data.json')
 TRAIN_DATA_COUNT_FILE = os.path.join(PROJECT_DIR, 'sample_data', 'train_data_count.json')
 TEST_DATA_COUNT_FILE = os.path.join(PROJECT_DIR, 'sample_data', 'test_data_count.json')
 RESULT_FILE = os.path.join(PROJECT_DIR, 'sample_data', 'result.txt')
-OUTPUT_FILE = os.path.join(PROJECT_DIR, 'sample_data', 'output.json')
+OUTPUT_FILE = os.path.join(PROJECT_DIR, 'sample_data', 'output.csv')
 TEMP_FILE = os.path.join(PROJECT_DIR, 'sample_data', 'temp.json')
 
 OVERSAMPLE_DATA = os.path.join(DATA_DIR, 'oversample.json')

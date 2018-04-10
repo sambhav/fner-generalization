@@ -22,7 +22,7 @@ def parse_test_data(test_file):
 @click.command('parse-result')
 @click.option('--result', type=click.Path(), default=RESULT_FILE, help="Path to the result file")
 @click.option('--test_file', type=click.Path(exists=True), default=TEST_DATA_FILE, help="Path to the test file")
-@click.option('--output', type=click.Path(exists=True), default=OUTPUT_FILE, help="Path to the output file")
+@click.option('--output', type=click.Path(), default=OUTPUT_FILE, help="Path to the output file")
 def parse_result(result, test_file, output):
     test_data = parse_test_data(test_file)
     result_data = {}
@@ -42,9 +42,10 @@ def parse_result(result, test_file, output):
                 else:
                     results[value]['incorrect'] += 1
     with open(output, 'w') as f:
-        json.dump(dict(results), f, indent=2, sort_keys=True)
-    with open(output+'.keys', 'w') as f:
-        json.dump(list(sorted(results.keys())), f, indent=2, sort_keys=True)
+        f.write('key,correct,incorrect\n')
+        for key in results:
+            f.write(','.join((key, str(results[key]['correct']), str(results[key]['incorrect'])))+'\n')
+
 
 @click.command('generate-missing')
 @click.option('--test_count', type=click.Path(exists=True), default=TEST_DATA_COUNT_FILE, help="Path to the test file")
