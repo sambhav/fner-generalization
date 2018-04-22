@@ -8,6 +8,7 @@ from fner_generalization.constants import (DATA_DIR, MENTION_DIR,
                                            OVERSAMPLE_DIR, SAMPLE_DATA_FILE,
                                            TRAIN_DATA_FILE, TEST_DATA_FILE,
                                            TRAIN_DATA_COUNT_FILE, TEST_DATA_COUNT_FILE,
+                                           LABEL_COUNTS, LABEL_COUNTS_INDEX,
                                            REVERSE_INDEX, REVERSE_COUNT_INDEX,
                                            LABEL_COUNT_INDEX, REVERSE_LABEL_COUNT_INDEX)
 
@@ -38,8 +39,11 @@ def generate_label_mentions(input_file):
 def generate_reverse_index(input_file):
     output_data = {}
     data_count = defaultdict(int)
+
     _create_dirs()
     label_count = defaultdict(lambda: defaultdict(int))
+    entity_label_count = defaultdict(lambda: defaultdict(int))
+    lab_count = defaultdict(int)
     with open(input_file) as f:
         for line in f:
             data = json.loads(line)
@@ -50,6 +54,8 @@ def generate_reverse_index(input_file):
                 output_data[mention_name]['labels'] = list(set(output_data[mention_name]['labels'] + mention['labels']))
                 for label in mention['labels']:
                     label_count[mention_name][label] += 1
+                    entity_label_count[label][mention_name] += 1
+                    lab_count[label] += 1
                 data_count[mention_name] += 1
     output_data = dict(output_data)
     reverse_label_count = defaultdict(lambda: defaultdict(list))
@@ -67,6 +73,10 @@ def generate_reverse_index(input_file):
         json.dump(label_count, f, indent=2)
     with open(REVERSE_LABEL_COUNT_INDEX, 'w') as f:
         json.dump(reverse_label_count, f, indent=2)
+    with open(LABEL_COUNTS, 'w') as f:
+        json.dump(lab_count, f, indent=2)
+    with open(LABEL_COUNTS_INDEX, 'w') as f:
+        json.dump(entity_label_count, f, indent=2)
 
 @click.command('generate-count')
 @click.option('--input_file', type=click.Path(exists=True), default=TRAIN_DATA_FILE)

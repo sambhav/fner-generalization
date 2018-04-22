@@ -2,7 +2,7 @@ import click
 
 from fner_generalization.indexing import generate_label_mentions, generate_reverse_index, generate_count
 from fner_generalization.oversampling import over_sample_below_thresh, generate_over_sampled_data
-from fner_generalization.undersampling import under_sample_above_thresh, under_sample_entity_above_thresh, under_sample_name_above_thresh
+from fner_generalization.undersampling import under_sample_above_thresh, under_sample_entity_above_thresh, undersample_new, under_sample_name_above_thresh
 from fner_generalization.parse import parse_result, generate_missing, remove_missing
 
 commands = {
@@ -13,6 +13,7 @@ commands = {
     'undersample': under_sample_above_thresh,
     'undersample-entity': under_sample_entity_above_thresh,
     'undersample-name': under_sample_name_above_thresh,
+    'undersample-new': undersample_new,
     'parse-result': parse_result,
     'generate-count': generate_count,
     'generate-missing': generate_missing,

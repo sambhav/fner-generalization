@@ -10,6 +10,8 @@ REVERSE_INDEX = os.path.join(DATA_DIR, 'rindex.json')
 REVERSE_COUNT_INDEX = os.path.join(DATA_DIR, 'rcount.json')
 LABEL_COUNT_INDEX = os.path.join(DATA_DIR, 'lcount.json')
 REVERSE_LABEL_COUNT_INDEX = os.path.join(DATA_DIR, 'rlcount.json')
+LABEL_COUNTS = os.path.join(DATA_DIR, 'label_counts.json')
+LABEL_COUNTS_INDEX = os.path.join(DATA_DIR, 'label_index.json')
 
 SAMPLE_DATA_FILE = os.path.join(PROJECT_DIR, 'sample_data', 'data.json')
 TEST_DATA_FILE = os.path.join(PROJECT_DIR, 'sample_data', 'new_mixed_test_data.json')
