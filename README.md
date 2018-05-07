@@ -1,6 +1,6 @@
 # FNER - Generalization of data
 
-Group Project for Data Mining - 
+BTP - Sambhav Kothari 
 We try to improve results for fine grained entity recognition. We first prove the hypothesis that 
 undermentioned entities in the training database lead to lower accuracy when testing them.
 
